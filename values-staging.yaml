@@ -1,0 +1,33 @@
+# values-staging.yaml
+envTag: "staging"
+repoURL: "https://github.com/dorayakiiiiz/yas-devops-1.git"
+targetRevision: main # Nhánh chứa source code và Helm charts
+project: default
+
+coreServices:
+  - product
+  - cart
+  - order
+  - customer
+  - inventory
+  - tax
+  - media
+  - search
+  - sampledata
+
+services:
+  yas-configuration: { tag: "latest" }
+  storefront-bff: { tag: "latest" }
+  storefront-ui: { tag: "latest" }
+  backoffice-bff: { tag: "latest" }
+  backoffice-ui: { tag: "latest" }
+  swagger-ui: { tag: "latest" }
+  product: { tag: "latest" }
+  cart: { tag: "latest" }
+  order: { tag: "latest" }
+  customer: { tag: "latest" }
+  inventory: { tag: "latest" }
+  tax: { tag: "latest" }
+  media: { tag: "latest" }
+  search: { tag: "latest" }
+  sampledata: { tag: "latest" }

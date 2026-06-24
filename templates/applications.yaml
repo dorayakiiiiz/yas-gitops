@@ -1,0 +1,109 @@
+{{- $envTag := .Values.envTag -}}
+{{- $repoURL := .Values.repoURL -}}
+{{- $targetRevision := .Values.targetRevision -}}
+{{- $project := .Values.project | default "default" -}}
+
+# --- yas-configuration ---
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: yas-configuration-{{ $envTag }}
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ $project }}
+  source:
+    repoURL: {{ $repoURL }}
+    targetRevision: {{ $targetRevision }}
+    path: k8s/charts/yas-configuration
+    helm:
+      valueFiles:
+        - values-{{ $envTag }}.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ $envTag }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+# --- Frontend & BFF Services ---
+{{- range $service := list "storefront-bff" "storefront-ui" "backoffice-bff" "backoffice-ui" "swagger-ui" }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $service }}-{{ $envTag }}
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ $project }}
+  source:
+    repoURL: {{ $repoURL }}
+    targetRevision: {{ $targetRevision }}
+    path: k8s/charts/{{ $service }}
+    helm:
+      valueFiles:
+        - values-{{ $envTag }}.yaml
+      parameters:
+        {{- if eq $service "storefront-ui" }}
+        - name: ui.image.tag
+          value: {{ index $.Values.services $service "tag" | quote }}
+        {{- else if eq $service "backoffice-ui" }}
+        - name: ui.image.tag
+          value: {{ index $.Values.services $service "tag" | quote }}
+        {{- else if eq $service "swagger-ui" }}
+        - name: image.tag
+          value: {{ index $.Values.services $service "tag" | quote }}
+        {{- else }}
+        - name: backend.image.tag
+          value: {{ index $.Values.services $service "tag" | quote }}
+        {{- end }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ $envTag }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+{{- end }}
+
+# --- Core Backend Services ---
+{{- range $service := .Values.coreServices }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $service }}-{{ $envTag }}
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ $project }}
+  source:
+    repoURL: {{ $repoURL }}
+    targetRevision: {{ $targetRevision }}
+    path: k8s/charts/{{ $service }}
+    helm:
+      valueFiles:
+        - values-{{ $envTag }}.yaml
+      parameters:
+        - name: backend.image.tag
+          value: {{ index $.Values.services $service "tag" | quote }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ $envTag }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+{{- end }}
