@@ -18,9 +18,6 @@ spec:
     repoURL: {{ $repoURL }}
     targetRevision: {{ $targetRevision }}
     path: k8s/charts/yas-configuration
-    helm:
-      valueFiles:
-        - values-{{ $envTag }}.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: {{ $envTag }}
@@ -48,8 +45,6 @@ spec:
     targetRevision: {{ $targetRevision }}
     path: k8s/charts/{{ $service }}
     helm:
-      valueFiles:
-        - values-{{ $envTag }}.yaml
       parameters:
         {{- if eq $service "storefront-ui" }}
         - name: ui.image.tag
@@ -92,8 +87,6 @@ spec:
     targetRevision: {{ $targetRevision }}
     path: k8s/charts/{{ $service }}
     helm:
-      valueFiles:
-        - values-{{ $envTag }}.yaml
       parameters:
         - name: backend.image.tag
           value: {{ index $.Values.services $service "tag" | quote }}
