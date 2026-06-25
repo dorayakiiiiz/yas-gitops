@@ -3,31 +3,6 @@
 {{- $targetRevision := .Values.targetRevision -}}
 {{- $project := .Values.project | default "default" -}}
 
-# --- yas-configuration ---
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: yas-configuration-{{ $envTag }}
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  project: {{ $project }}
-  source:
-    repoURL: {{ $repoURL }}
-    targetRevision: {{ $targetRevision }}
-    path: k8s/charts/yas-configuration
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: {{ $envTag }}
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-
 # --- Frontend & BFF Services ---
 {{- range $service := list "storefront-bff" "storefront-ui" "backoffice-bff" "backoffice-ui" "swagger-ui" }}
 ---
