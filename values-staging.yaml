@@ -1,6 +1,6 @@
 # values-staging.yaml
 envTag: "staging"
-repoURL: "https://github.com/dorayakiiiiz/yas-devops-1.git"
+repoURL: "https://github.com/dorayakiiiiz/yas-gitops.git"
 targetRevision: main # Nhánh chứa source code và Helm charts
 project: default
 
