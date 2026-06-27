@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ include "backend.fullname" . }}-retry
+spec:
+  hosts:
+    - {{ include "backend.fullname" . }}
+  http:
+    - retries:
+        attempts: 3
+        perTryTimeout: 5s
+        retryOn: 5xx,gateway-error,connect-failure,retriable-4xx
+      timeout: 20s
+      route:
+        - destination:
+            host: {{ include "backend.fullname" . }}
+            port:
+              number: 80

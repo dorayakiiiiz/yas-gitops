@@ -1,0 +1,72 @@
+# 1. DENY ALL mặc định
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: deny-all
+spec:
+  {}
+---
+# 2. Cho phép Ingress gọi vào các service Frontend/BFF
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-ingress-to-frontend
+spec:
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values: [storefront-ui, storefront-bff, backoffice-ui, backoffice-bff, swagger-ui, sampledata]
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals: ["cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
+---
+# 3. Cho phép Frontend/BFF gọi xuống Backend Services
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-bff-to-backend
+spec:
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values: [product, cart, order, customer, inventory, tax, media, search]
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals: 
+              - "*/sa/storefront-bff"
+              - "*/sa/backoffice-bff"
+              - "*/sa/sampledata"
+---
+# 4. Cho phép Backend gọi DB (Postgres, Keycloak, Redis...)
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-backend-to-infra
+spec:
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values: [postgres, keycloak, redis, kafka, elasticsearch]
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals: 
+              - "*/sa/product"
+              - "*/sa/cart"
+              - "*/sa/order"
+              - "*/sa/customer"
+              - "*/sa/inventory"
+              - "*/sa/tax"
+              - "*/sa/media"
+              - "*/sa/search"
+              - "*/sa/storefront-bff"
+              - "*/sa/backoffice-bff"
+              - "*/sa/sampledata"
