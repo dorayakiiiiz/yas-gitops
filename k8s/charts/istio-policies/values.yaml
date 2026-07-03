@@ -1,0 +1,128 @@
+# Istio Service Mesh Policies cho YAS Microservices
+# Namespace ma policies se apply (ArgoCD se deploy vao namespace nay)
+namespace: dev
+
+# 1. mTLS Configuration
+mtls:
+  enabled: true
+  mode: STRICT  # STRICT = bat buoc mTLS, PERMISSIVE = tuy chon
+
+# 2. Authorization Policies - Ban do giao tiep giua 14 services
+#    Format: service_target -> danh sach services duoc phep goi
+#    Dua tren Gateway Routes config + Source code dependencies
+authorizationPolicies:
+  # product: trung tam, nhieu service can goi
+  product:
+    allowedCallers:
+      - storefront-bff
+      - backoffice-bff
+      - cart
+      - order
+      - search
+      - sampledata
+      - promotion
+
+  # cart: gio hang
+  cart:
+    allowedCallers:
+      - storefront-bff
+      - backoffice-bff
+      - order
+
+  # order: don hang
+  order:
+    allowedCallers:
+      - storefront-bff
+      - backoffice-bff
+
+  # customer: thong tin khach hang
+  customer:
+    allowedCallers:
+      - storefront-bff
+      - backoffice-bff
+      - order
+
+  # inventory: kho hang
+  inventory:
+    allowedCallers:
+      - storefront-bff
+      - backoffice-bff
+      - order
+      - product
+
+  # tax: thue
+  tax:
+    allowedCallers:
+      - storefront-bff
+      - backoffice-bff
+      - order
+
+  # media: upload hinh
+  media:
+    allowedCallers:
+      - storefront-bff
+      - backoffice-bff
+      - product
+      - sampledata
+
+  # search: tim kiem san pham
+  search:
+    allowedCallers:
+      - storefront-bff
+      - backoffice-bff
+
+  # promotion: ma giam gia
+  promotion:
+    allowedCallers:
+      - storefront-bff
+      - backoffice-bff
+      - order
+      - cart
+
+  # sampledata: nap du lieu mau (goi nhieu services ra ngoai)
+  sampledata:
+    allowedCallers:
+      - storefront-bff
+      - backoffice-bff
+
+# BFF va UI khong can AuthorizationPolicy rieng vi:
+# - storefront-bff / backoffice-bff nhan traffic tu Ingress (ngoai mesh)
+#   Ingress traffic khong co SPIFFE identity, dung allowIngress ben duoi
+# - storefront-ui / backoffice-ui / swagger-ui la frontend tinh (Next.js/nginx)
+#   Duoc goi qua Ingress hoac trinh duyet, khong bi chan boi inter-service policy
+
+# Cac BFF services can cho phep traffic tu Ingress Controller
+bffServices:
+  - storefront-bff
+  - backoffice-bff
+  - swagger-ui
+
+# 3. VirtualService Retry - Auto-retry khi service loi 5xx
+#    Ap dung cho tat ca backend services
+retryPolicy:
+  enabled: true
+  attempts: 3
+  perTryTimeout: 5s
+  timeout: 20s
+  retryOn: "5xx,gateway-error,connect-failure,retriable-4xx"
+
+# Danh sach services duoc cau hinh retry
+retryServices:
+  - product
+  - cart
+  - order
+  - customer
+  - inventory
+  - tax
+  - media
+  - search
+  - promotion
+  - sampledata
+
+# 4. Fault Injection - CHI dung khi demo, apply thu cong
+#    KHONG bat mac dinh trong ArgoCD
+faultInjection:
+  enabled: false  # Khong bat mac dinh, apply thu cong khi demo
+  targetService: product
+  httpStatus: 503
+  percentage: 30

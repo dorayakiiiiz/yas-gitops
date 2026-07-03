@@ -1,0 +1,74 @@
+# Authorization Policies - Zero Trust Network Security
+#
+# Nguyen tac Zero Trust:
+#   1. deny-all (mac dinh chan tat ca)
+#   2. Roi mo ALLOW tung luong cu the
+#
+# Cach Istio xac dinh "ai dang goi":
+#   Moi Pod co 1 ServiceAccount, Istio gan SPIFFE identity:
+#   cluster.local/ns/<namespace>/sa/<service-account-name>
+#
+# Label dung de match pod:
+#   Helm chart backend dung label: app.kubernetes.io/name: <service>
+#   (vi du: app.kubernetes.io/name: product)
+
+# DENY-ALL: Mac dinh chan tat ca traffic trong namespace
+# spec: {} rong = khong co rule nao = deny tat ca
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: deny-all
+  namespace: {{ .Values.namespace }}
+spec: {}
+
+# ALLOW: Cho phep traffic tu Ingress Controller vao BFF/UI
+# Ingress khong co SPIFFE identity nen match bang namespace
+{{- range .Values.bffServices }}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: authz-{{ . }}
+  namespace: {{ $.Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ . }}
+  action: ALLOW
+  rules:
+    # Cho phep traffic tu Ingress Controller (namespace ingress-nginx)
+    - from:
+        - source:
+            namespaces:
+              - ingress-nginx
+              - istio-system
+    # Cho phep traffic tu cac service trong cung namespace (BFF goi BFF neu can)
+    - from:
+        - source:
+            namespaces:
+              - {{ $.Values.namespace }}
+{{- end }}
+
+# ALLOW: Inter-service policies cho tung backend service
+# Moi service chi duoc goi boi danh sach callers da define
+{{- range $service, $policy := .Values.authorizationPolicies }}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: authz-{{ $service }}
+  namespace: {{ $.Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ $service }}
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+              {{- range $policy.allowedCallers }}
+              - "cluster.local/ns/{{ $.Values.namespace }}/sa/{{ . }}"
+              {{- end }}
+{{- end }}

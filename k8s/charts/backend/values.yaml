@@ -46,7 +46,11 @@ deployment:
     reloader.stakater.com/search: "true"
   extraAnnotations: []
 
-extraEnvs: []
+extraEnvs:
+  # Giảm JVM heap để 14 services chạy vừa trên máy 16GB RAM
+  # Mỗi service: ~320MB (thay vì mặc định ~512MB) → tiết kiệm ~3GB tổng
+  - name: JAVA_TOOL_OPTIONS
+    value: "-Xms64m -Xmx256m -XX:MaxMetaspaceSize=128m"
 #  - name: EXTRA_VARIABLE_NAME
 #    value: extra variable data
 

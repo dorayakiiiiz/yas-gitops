@@ -1,0 +1,6 @@
+apiVersion: v2
+name: istio-policies
+description: Istio Service Mesh policies (mTLS, AuthorizationPolicy, VirtualService Retry) for YAS Microservices
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

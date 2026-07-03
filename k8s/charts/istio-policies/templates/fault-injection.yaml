@@ -1,0 +1,37 @@
+# Fault Injection - CHI DUNG KHI DEMO RETRY POLICY
+#
+# Cach dung: Apply thu cong bang lenh kubectl apply
+#   kubectl apply -f k8s/charts/istio-policies/templates/fault-injection.yaml
+# Sau khi demo xong thi xoa di:
+#   kubectl delete -f k8s/charts/istio-policies/templates/fault-injection.yaml
+#
+# KHONG bat trong ArgoCD (faultInjection.enabled = false mac dinh)
+# Vi neu bat thi toan bo requests vao service se bi loi 30%
+{{- if .Values.faultInjection.enabled }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.faultInjection.targetService }}-fault-injection
+  namespace: {{ .Values.namespace }}
+spec:
+  hosts:
+    - {{ .Values.faultInjection.targetService }}
+  http:
+    - fault:
+        abort:
+          # Phan tram requests bi inject loi
+          percentage:
+            value: {{ .Values.faultInjection.percentage }}
+          httpStatus: {{ .Values.faultInjection.httpStatus }}
+      retries:
+        attempts: {{ .Values.retryPolicy.attempts }}
+        perTryTimeout: {{ .Values.retryPolicy.perTryTimeout }}
+        retryOn: {{ .Values.retryPolicy.retryOn }}
+      timeout: {{ .Values.retryPolicy.timeout }}
+      route:
+        - destination:
+            host: {{ .Values.faultInjection.targetService }}
+            port:
+              number: 80
+{{- end }}

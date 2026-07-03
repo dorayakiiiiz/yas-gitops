@@ -1,0 +1,19 @@
+# DestinationRule - Bat buoc mTLS khi goi RA NGOAI (outbound)
+# Ket hop voi PeerAuthentication tao mTLS 2 chieu hoan chinh:
+#   PeerAuthentication = kiem soat traffic DEN (inbound)
+#   DestinationRule    = kiem soat traffic DI  (outbound)
+# ISTIO_MUTUAL = dung certificate do Istio CA tu cap va quan ly
+{{- if .Values.mtls.enabled }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: default-mtls-outbound
+  namespace: {{ .Values.namespace }}
+spec:
+  # Ap dung cho TAT CA services trong namespace
+  host: "*.{{ .Values.namespace }}.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+{{- end }}

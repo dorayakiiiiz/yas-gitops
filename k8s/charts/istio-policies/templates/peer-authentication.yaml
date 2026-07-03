@@ -1,0 +1,15 @@
+# PeerAuthentication - Bat buoc mTLS cho toan bo namespace
+# Y nghia: Moi traffic DI VAO pod trong namespace phai dung mTLS
+# Pod tu NGOAI mesh (khong co Envoy sidecar) se bi tu choi ngay
+# Pod tu TRONG mesh thi Envoy tu dong xu ly certificate, app khong can thay doi code
+{{- if .Values.mtls.enabled }}
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: default-mtls
+  namespace: {{ .Values.namespace }}
+spec:
+  mtls:
+    mode: {{ .Values.mtls.mode }}
+{{- end }}

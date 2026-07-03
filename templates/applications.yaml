@@ -79,3 +79,34 @@ spec:
     syncOptions:
       - CreateNamespace=true
 {{- end }}
+
+# --- Istio Service Mesh Policies ---
+# Deploy mTLS, AuthorizationPolicy, VirtualService Retry
+# vào cùng namespace với services
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-policies-{{ $envTag }}
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: {{ $project }}
+  source:
+    repoURL: {{ $repoURL }}
+    targetRevision: {{ $targetRevision }}
+    path: k8s/charts/istio-policies
+    helm:
+      parameters:
+        - name: namespace
+          value: {{ $envTag }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ $envTag }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
