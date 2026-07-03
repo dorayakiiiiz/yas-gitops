@@ -1,0 +1,38 @@
+# VirtualService Retry Policies cho tat ca backend services
+#
+# Muc dich: Khi service tra ve loi 5xx (500, 502, 503, 504...)
+# Envoy sidecar cua caller tu dong retry ma app khong can code retry logic
+#
+# Thong so:
+#   attempts: 3        - retry toi da 3 lan
+#   perTryTimeout: 5s  - moi lan retry timeout sau 5 giay
+#   timeout: 20s       - tong thoi gian toi da cho ca 3 lan
+#   retryOn:
+#     - 5xx            : moi loi server (500, 502, 503, 504)
+#     - gateway-error  : loi gateway (502, 503, 504)
+#     - connect-failure: khong ket noi duoc
+#     - retriable-4xx  : mot so loi 4xx co the retry (vi du 409 Conflict)
+{{- if .Values.retryPolicy.enabled }}
+{{- range .Values.retryServices }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ . }}-retry
+  namespace: {{ $.Values.namespace }}
+spec:
+  hosts:
+    - {{ . }}
+  http:
+    - retries:
+        attempts: {{ $.Values.retryPolicy.attempts }}
+        perTryTimeout: {{ $.Values.retryPolicy.perTryTimeout }}
+        retryOn: {{ $.Values.retryPolicy.retryOn }}
+      timeout: {{ $.Values.retryPolicy.timeout }}
+      route:
+        - destination:
+            host: {{ . }}
+            port:
+              number: 80
+{{- end }}
+{{- end }}

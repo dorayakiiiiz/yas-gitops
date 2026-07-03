@@ -46,7 +46,11 @@ deployment:
     reloader.stakater.com/search: "true"
   extraAnnotations: []
 
-extraEnvs: []
+extraEnvs:
+  # Giam JVM heap de 14 services chay vua tren may 16GB RAM
+  # Moi service toi da 256MB thay vi mac dinh 512MB
+  - name: JAVA_TOOL_OPTIONS
+    value: "-Xms64m -Xmx256m -XX:MaxMetaspaceSize=128m"
 #  - name: EXTRA_VARIABLE_NAME
 #    value: extra variable data
 
