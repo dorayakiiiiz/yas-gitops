@@ -1,0 +1,44 @@
+# Disable mTLS outbound cho cac infra services khong co Envoy sidecar
+# Loi: Keycloak/backend trong 'dev' namespace co Envoy, khi ket noi toi postgres/redis/kafka/es
+# (khong co Envoy), DestinationRule ISTIO_MUTUAL se bi Connection Reset
+# Fix: Override voi DISABLE cho cac host infra cu the
+
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: disable-mtls-postgres
+spec:
+  host: "*.postgres.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: disable-mtls-redis
+spec:
+  host: "*.redis.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: disable-mtls-kafka
+spec:
+  host: "*.kafka.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: disable-mtls-elasticsearch
+spec:
+  host: "*.elasticsearch.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: DISABLE

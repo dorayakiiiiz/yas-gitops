@@ -1,72 +1,257 @@
-# 1. DENY ALL mặc định
+# 1. DENY ALL mac dinh - chan het traffic neu khong co rule nao khop
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
   name: deny-all
-spec:
-  {}
+  namespace: dev
+spec: {}
 ---
-# 2. Cho phép Ingress gọi vào các service Frontend/BFF
+# 2. Cho phep moi traffic vao storefront-ui
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: allow-ingress-to-frontend
+  name: allow-to-storefront-ui
+  namespace: dev
 spec:
   selector:
-    matchExpressions:
-      - key: app
-        operator: In
-        values: [storefront-ui, storefront-bff, backoffice-ui, backoffice-bff, swagger-ui, sampledata]
+    matchLabels:
+      app.kubernetes.io/name: storefront-ui
+  action: ALLOW
+  rules:
+    - {}
+---
+# 3. Cho phep moi traffic vao storefront-bff (tu Nginx Ingress va browser)
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-storefront-bff
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: storefront-bff
+  action: ALLOW
+  rules:
+    - {}
+---
+# 4. Cho phep moi traffic vao backoffice-ui
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-backoffice-ui
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backoffice-ui
+  action: ALLOW
+  rules:
+    - {}
+---
+# 5. Cho phep moi traffic vao backoffice-bff
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-backoffice-bff
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: backoffice-bff
+  action: ALLOW
+  rules:
+    - {}
+---
+# 6. Cho phep moi traffic vao swagger-ui
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-swagger-ui
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: swagger-ui-dev
+  action: ALLOW
+  rules:
+    - {}
+---
+# 7. Cho phep sampledata truy cap khong han che (can load du lieu mau)
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-sampledata
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: sampledata
+  action: ALLOW
+  rules:
+    - {}
+---
+# 8. Cho phep BFF va sampledata goi den product service
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-product
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: product
   action: ALLOW
   rules:
     - from:
         - source:
-            principals: ["cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"]
+            principals:
+              - "cluster.local/ns/dev/sa/storefront-bff"
+              - "cluster.local/ns/dev/sa/backoffice-bff"
+              - "cluster.local/ns/dev/sa/sampledata"
 ---
-# 3. Cho phép Frontend/BFF gọi xuống Backend Services
+# 9. Cho phep BFF va sampledata goi den cart service
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: allow-bff-to-backend
+  name: allow-to-cart
+  namespace: dev
 spec:
   selector:
-    matchExpressions:
-      - key: app
-        operator: In
-        values: [product, cart, order, customer, inventory, tax, media, search]
+    matchLabels:
+      app.kubernetes.io/name: cart
   action: ALLOW
   rules:
     - from:
         - source:
-            principals: 
-              - "*/sa/storefront-bff"
-              - "*/sa/backoffice-bff"
-              - "*/sa/sampledata"
+            principals:
+              - "cluster.local/ns/dev/sa/storefront-bff"
+              - "cluster.local/ns/dev/sa/backoffice-bff"
+              - "cluster.local/ns/dev/sa/sampledata"
 ---
-# 4. Cho phép Backend gọi DB (Postgres, Keycloak, Redis...)
+# 10. Cho phep BFF va sampledata goi den order service
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: allow-backend-to-infra
+  name: allow-to-order
+  namespace: dev
 spec:
   selector:
-    matchExpressions:
-      - key: app
-        operator: In
-        values: [postgres, keycloak, redis, kafka, elasticsearch]
+    matchLabels:
+      app.kubernetes.io/name: order
   action: ALLOW
   rules:
     - from:
         - source:
-            principals: 
-              - "*/sa/product"
-              - "*/sa/cart"
-              - "*/sa/order"
-              - "*/sa/customer"
-              - "*/sa/inventory"
-              - "*/sa/tax"
-              - "*/sa/media"
-              - "*/sa/search"
-              - "*/sa/storefront-bff"
-              - "*/sa/backoffice-bff"
-              - "*/sa/sampledata"
+            principals:
+              - "cluster.local/ns/dev/sa/storefront-bff"
+              - "cluster.local/ns/dev/sa/backoffice-bff"
+              - "cluster.local/ns/dev/sa/sampledata"
+---
+# 11. Cho phep BFF va sampledata goi den customer service
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-customer
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: customer
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+              - "cluster.local/ns/dev/sa/storefront-bff"
+              - "cluster.local/ns/dev/sa/backoffice-bff"
+              - "cluster.local/ns/dev/sa/sampledata"
+---
+# 12. Cho phep BFF va sampledata goi den inventory service
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-inventory
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: inventory
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+              - "cluster.local/ns/dev/sa/storefront-bff"
+              - "cluster.local/ns/dev/sa/backoffice-bff"
+              - "cluster.local/ns/dev/sa/sampledata"
+---
+# 13. Cho phep BFF va sampledata goi den tax service
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-tax
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tax
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+              - "cluster.local/ns/dev/sa/storefront-bff"
+              - "cluster.local/ns/dev/sa/backoffice-bff"
+              - "cluster.local/ns/dev/sa/sampledata"
+---
+# 14. Cho phep BFF va sampledata goi den media service
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-media
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: media
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+              - "cluster.local/ns/dev/sa/storefront-bff"
+              - "cluster.local/ns/dev/sa/backoffice-bff"
+              - "cluster.local/ns/dev/sa/sampledata"
+---
+# 15. Cho phep BFF va sampledata goi den search service
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-to-search
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: search
+  action: ALLOW
+  rules:
+    - from:
+        - source:
+            principals:
+              - "cluster.local/ns/dev/sa/storefront-bff"
+              - "cluster.local/ns/dev/sa/backoffice-bff"
+              - "cluster.local/ns/dev/sa/sampledata"
+---
+# 16. Cho phep tat ca backend goi den keycloak (auth)
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-all-to-keycloak
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: keycloak
+  action: ALLOW
+  rules:
+    - {}
