@@ -1,0 +1,28 @@
+# Helm values cho istio-policies chart
+# Namespace noi cac policies se duoc apply
+namespace: dev
+
+# mTLS mode: STRICT hoac PERMISSIVE
+mtls:
+  mode: STRICT
+
+# Retry policy cho tat ca backend services
+retryPolicy:
+  enabled: true
+  attempts: 3
+  perTryTimeout: 5s
+  timeout: 20s
+  retryOn: "5xx,gateway-error,connect-failure,retriable-4xx"
+
+# Danh sach services duoc cau hinh retry VirtualService
+retryServices:
+  - product
+  - cart
+  - order
+  - customer
+  - inventory
+  - tax
+  - media
+  - search
+  - promotion
+  - sampledata
