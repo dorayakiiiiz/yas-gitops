@@ -222,6 +222,7 @@ spec:
               - "cluster.local/ns/dev/sa/storefront-bff"
               - "cluster.local/ns/dev/sa/backoffice-bff"
               - "cluster.local/ns/dev/sa/sampledata"
+              - "cluster.local/ns/dev/sa/product"
 ---
 # 15. Cho phep BFF va sampledata goi den search service
 apiVersion: security.istio.io/v1beta1
