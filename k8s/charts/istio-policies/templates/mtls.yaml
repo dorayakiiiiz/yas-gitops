@@ -4,7 +4,7 @@ metadata:
   name: default-mtls
 spec:
   mtls:
-    mode: STRICT
+    mode: PERMISSIVE
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
