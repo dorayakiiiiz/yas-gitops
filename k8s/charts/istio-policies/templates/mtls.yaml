@@ -11,7 +11,7 @@ kind: DestinationRule
 metadata:
   name: default-mtls-outbound
 spec:
-  host: "*.svc.cluster.local"
+  host: "*.dev.svc.cluster.local"
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
