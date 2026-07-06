@@ -108,6 +108,10 @@ spec:
               - "cluster.local/ns/dev/sa/storefront-bff"
               - "cluster.local/ns/dev/sa/backoffice-bff"
               - "cluster.local/ns/dev/sa/sampledata"
+              - "cluster.local/ns/dev/sa/cart"
+              - "cluster.local/ns/dev/sa/order"
+              - "cluster.local/ns/dev/sa/search"
+              - "cluster.local/ns/dev/sa/inventory"
 ---
 # 9. Cho phep BFF va sampledata goi den cart service
 apiVersion: security.istio.io/v1beta1
@@ -184,6 +188,8 @@ spec:
               - "cluster.local/ns/dev/sa/storefront-bff"
               - "cluster.local/ns/dev/sa/backoffice-bff"
               - "cluster.local/ns/dev/sa/sampledata"
+              - "cluster.local/ns/dev/sa/cart"
+              - "cluster.local/ns/dev/sa/order"
 ---
 # 13. Cho phep BFF va sampledata goi den tax service
 apiVersion: security.istio.io/v1beta1
