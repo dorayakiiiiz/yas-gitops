@@ -220,6 +220,21 @@ backofficeBffExtraConfig:
               client-id: backoffice-bff
               client-secret: ${KEYCLOAK_BACKOFFICE_BFF_CLIENT_SECRET}
               scope: openid, profile, email, roles
+    cloud:
+      gateway:
+        routes:
+          - id: api
+            uri: http://nginx
+            predicates:
+              - Path=/api/**
+            filters:
+              - DedupeResponseHeader=Origin Access-Control-Request-Method Access-Control-Request-Headers
+              - TokenRelay=
+              - StripPrefix=1
+          - id: nextjs
+            uri: http://backoffice-ui:80
+            predicates:
+              - Path=/**
 
 storefrontBffExtraConfig:
   spring:
@@ -240,9 +255,9 @@ storefrontBffExtraConfig:
               client-id: storefront-bff
               client-secret: ${KEYCLOAK_STOREFRONT_BFF_CLIENT_SECRET}
               scope: openid, profile, email, roles
-    # [FIX] Override route nextjs bá»‹ hardcode sai trong application-prod.yaml bundled trong JAR.
-    # JAR gá»‘c cá»§a storefront-bff trá» sang http://storefront-nextjs:3000 (hostname docker-compose).
-    # External config file cÃ³ priority cao hÆ¡n JAR, nÃªn route nÃ y sáº½ tháº¯ng.
+    # [FIX] Override route nextjs bÃ¡Â»â€¹ hardcode sai trong application-prod.yaml bundled trong JAR.
+    # JAR gÃ¡Â»â€˜c cÃ¡Â»Â§a storefront-bff trÃ¡Â»Â sang http://storefront-nextjs:3000 (hostname docker-compose).
+    # External config file cÃƒÂ³ priority cao hÃ†Â¡n JAR, nÃƒÂªn route nÃƒÂ y sÃ¡ÂºÂ½ thÃ¡ÂºÂ¯ng.
     cloud:
       gateway:
         server:
