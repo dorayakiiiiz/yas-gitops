@@ -240,9 +240,9 @@ storefrontBffExtraConfig:
               client-id: storefront-bff
               client-secret: ${KEYCLOAK_STOREFRONT_BFF_CLIENT_SECRET}
               scope: openid, profile, email, roles
-    # [FIX] Override route nextjs bị hardcode sai trong application-prod.yaml bundled trong JAR.
-    # JAR gốc của storefront-bff trỏ sang http://storefront-nextjs:3000 (hostname docker-compose).
-    # External config file có priority cao hơn JAR, nên route này sẽ thắng.
+    # [FIX] Override route nextjs b hardcode sai trong application-prod.yaml bundled trong JAR.
+    # JAR gc ca storefront-bff tr sang http://storefront-nextjs:3000 (hostname docker-compose).
+    # External config file c priority cao hn JAR, nn route ny s thng.
     cloud:
       gateway:
         server:

@@ -19,6 +19,7 @@ applicationConfig:
   server:
     shutdown: graceful
     port: 80
+    forward-headers-strategy: framework
 
   management:
     otlp:
@@ -255,9 +256,9 @@ storefrontBffExtraConfig:
               client-id: storefront-bff
               client-secret: ${KEYCLOAK_STOREFRONT_BFF_CLIENT_SECRET}
               scope: openid, profile, email, roles
-    # [FIX] Override route nextjs bÃ¡Â»â€¹ hardcode sai trong application-prod.yaml bundled trong JAR.
-    # JAR gÃ¡Â»â€˜c cÃ¡Â»Â§a storefront-bff trÃ¡Â»Â sang http://storefront-nextjs:3000 (hostname docker-compose).
-    # External config file cÃƒÂ³ priority cao hÃ†Â¡n JAR, nÃƒÂªn route nÃƒÂ y sÃ¡ÂºÂ½ thÃ¡ÂºÂ¯ng.
+    # [FIX] Override route nextjs b hardcode sai trong application-prod.yaml bundled trong JAR.
+    # JAR gc ca storefront-bff tr sang http://storefront-nextjs:3000 (hostname docker-compose).
+    # External config file c priority cao hn JAR, nn route ny s thng.
     cloud:
       gateway:
         server:
