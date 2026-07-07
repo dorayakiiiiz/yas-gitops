@@ -77,21 +77,21 @@ applicationConfig:
 
   yas:
     services:
-      cart: http://cart/cart
-      customer: http://customer/customer
-      inventory: http://inventory/inventory
-      location: http://location/location
-      media: http://media/media
-      order: http://order/order
-      payment: http://payment/payment
-      payment-paypal: http://payment-paypal/payment-paypal
-      product: http://product/product
-      promotion: http://promotion/promotion
-      rating: http://rating/rating
-      search: http://search/search
-      tax: http://tax/tax
-      sampledata: http://sampledata/sampledata
-      recommendation: http://recommendation/recommendation
+      cart: http://cart.dev.svc.cluster.local/cart
+      customer: http://customer.dev.svc.cluster.local/customer
+      inventory: http://inventory.dev.svc.cluster.local/inventory
+      location: http://location.dev.svc.cluster.local/location
+      media: http://media.dev.svc.cluster.local/media
+      order: http://order.dev.svc.cluster.local/order
+      payment: http://payment.dev.svc.cluster.local/payment
+      payment-paypal: http://payment-paypal.dev.svc.cluster.local/payment-paypal
+      product: http://product.dev.svc.cluster.local/product
+      promotion: http://promotion.dev.svc.cluster.local/promotion
+      rating: http://rating.dev.svc.cluster.local/rating
+      search: http://search.dev.svc.cluster.local/search
+      tax: http://tax.dev.svc.cluster.local/tax
+      sampledata: http://sampledata.dev.svc.cluster.local/sampledata
+      recommendation: http://recommendation.dev.svc.cluster.local/recommendation
 
 # Gateway config for bff microservices
 gatewayRoutesConfig:
@@ -100,98 +100,98 @@ gatewayRoutesConfig:
       gateway:
         routes:
           - id: product_api
-            uri: http://product
+            uri: http://product.dev.svc.cluster.local
             predicates:
               - Path=/api/product/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: location_api
-            uri: http://location
+            uri: http://location.dev.svc.cluster.local
             predicates:
               - Path=/api/location/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: inventory_api
-            uri: http://inventory
+            uri: http://inventory.dev.svc.cluster.local
             predicates:
               - Path=/api/inventory/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: cart_api
-            uri: http://cart
+            uri: http://cart.dev.svc.cluster.local
             predicates:
               - Path=/api/cart/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: customer_api
-            uri: http://customer
+            uri: http://customer.dev.svc.cluster.local
             predicates:
               - Path=/api/customer/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: media_api
-            uri: http://media
+            uri: http://media.dev.svc.cluster.local
             predicates:
               - Path=/api/media/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: rating_api
-            uri: http://rating
+            uri: http://rating.dev.svc.cluster.local
             predicates:
               - Path=/api/rating/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: tax_api
-            uri: http://tax
+            uri: http://tax.dev.svc.cluster.local
             predicates:
               - Path=/api/tax/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: promotion_api
-            uri: http://promotion
+            uri: http://promotion.dev.svc.cluster.local
             predicates:
               - Path=/api/promotion/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: search_api
-            uri: http://search
+            uri: http://search.dev.svc.cluster.local
             predicates:
               - Path=/api/search/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: order_api
-            uri: http://order
+            uri: http://order.dev.svc.cluster.local
             predicates:
               - Path=/api/order/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: recommendation_api
-            uri: http://recommendation
+            uri: http://recommendation.dev.svc.cluster.local
             predicates:
               - Path=/api/recommendation/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: webhook_api
-            uri: http://webhook
+            uri: http://webhook.dev.svc.cluster.local
             predicates:
               - Path=/api/webhook/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: sampledata_api
-            uri: http://sampledata
+            uri: http://sampledata.dev.svc.cluster.local
             predicates:
               - Path=/api/sampledata/**
             filters:
@@ -225,98 +225,98 @@ backofficeBffExtraConfig:
       gateway:
         routes:
           - id: product_api
-            uri: http://product
+            uri: http://product.dev.svc.cluster.local
             predicates:
               - Path=/api/product/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: location_api
-            uri: http://location
+            uri: http://location.dev.svc.cluster.local
             predicates:
               - Path=/api/location/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: inventory_api
-            uri: http://inventory
+            uri: http://inventory.dev.svc.cluster.local
             predicates:
               - Path=/api/inventory/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: cart_api
-            uri: http://cart
+            uri: http://cart.dev.svc.cluster.local
             predicates:
               - Path=/api/cart/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: customer_api
-            uri: http://customer
+            uri: http://customer.dev.svc.cluster.local
             predicates:
               - Path=/api/customer/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: media_api
-            uri: http://media
+            uri: http://media.dev.svc.cluster.local
             predicates:
               - Path=/api/media/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: rating_api
-            uri: http://rating
+            uri: http://rating.dev.svc.cluster.local
             predicates:
               - Path=/api/rating/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: tax_api
-            uri: http://tax
+            uri: http://tax.dev.svc.cluster.local
             predicates:
               - Path=/api/tax/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: promotion_api
-            uri: http://promotion
+            uri: http://promotion.dev.svc.cluster.local
             predicates:
               - Path=/api/promotion/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: search_api
-            uri: http://search
+            uri: http://search.dev.svc.cluster.local
             predicates:
               - Path=/api/search/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: order_api
-            uri: http://order
+            uri: http://order.dev.svc.cluster.local
             predicates:
               - Path=/api/order/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: recommendation_api
-            uri: http://recommendation
+            uri: http://recommendation.dev.svc.cluster.local
             predicates:
               - Path=/api/recommendation/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: webhook_api
-            uri: http://webhook
+            uri: http://webhook.dev.svc.cluster.local
             predicates:
               - Path=/api/webhook/**
             filters:
               - StripPrefix=1
               - TokenRelay=
           - id: sampledata_api
-            uri: http://sampledata
+            uri: http://sampledata.dev.svc.cluster.local
             predicates:
               - Path=/api/sampledata/**
             filters:
@@ -355,98 +355,98 @@ storefrontBffExtraConfig:
           webflux:
             routes:
               - id: product_api
-                uri: http://product
+                uri: http://product.dev.svc.cluster.local
                 predicates:
                   - Path=/api/product/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: location_api
-                uri: http://location
+                uri: http://location.dev.svc.cluster.local
                 predicates:
                   - Path=/api/location/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: inventory_api
-                uri: http://inventory
+                uri: http://inventory.dev.svc.cluster.local
                 predicates:
                   - Path=/api/inventory/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: cart_api
-                uri: http://cart
+                uri: http://cart.dev.svc.cluster.local
                 predicates:
                   - Path=/api/cart/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: customer_api
-                uri: http://customer
+                uri: http://customer.dev.svc.cluster.local
                 predicates:
                   - Path=/api/customer/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: media_api
-                uri: http://media
+                uri: http://media.dev.svc.cluster.local
                 predicates:
                   - Path=/api/media/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: rating_api
-                uri: http://rating
+                uri: http://rating.dev.svc.cluster.local
                 predicates:
                   - Path=/api/rating/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: tax_api
-                uri: http://tax
+                uri: http://tax.dev.svc.cluster.local
                 predicates:
                   - Path=/api/tax/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: promotion_api
-                uri: http://promotion
+                uri: http://promotion.dev.svc.cluster.local
                 predicates:
                   - Path=/api/promotion/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: search_api
-                uri: http://search
+                uri: http://search.dev.svc.cluster.local
                 predicates:
                   - Path=/api/search/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: order_api
-                uri: http://order
+                uri: http://order.dev.svc.cluster.local
                 predicates:
                   - Path=/api/order/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: recommendation_api
-                uri: http://recommendation
+                uri: http://recommendation.dev.svc.cluster.local
                 predicates:
                   - Path=/api/recommendation/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: webhook_api
-                uri: http://webhook
+                uri: http://webhook.dev.svc.cluster.local
                 predicates:
                   - Path=/api/webhook/**
                 filters:
                   - StripPrefix=1
                   - TokenRelay=
               - id: sampledata_api
-                uri: http://sampledata
+                uri: http://sampledata.dev.svc.cluster.local
                 predicates:
                   - Path=/api/sampledata/**
                 filters:
