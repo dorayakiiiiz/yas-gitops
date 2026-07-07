@@ -19,7 +19,7 @@ services:
   yas-configuration: { tag: "latest" }
   storefront-bff: { tag: "latest" }
   storefront-ui: { tag: "latest" }
-  backoffice-bff: { tag: "latest" }
+  backoffice-bff: { tag: "3f7651d" }
   backoffice-ui: { tag: "latest" }
   swagger-ui: { tag: "latest" }
   product: { tag: "latest" }
