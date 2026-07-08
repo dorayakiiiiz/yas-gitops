@@ -203,6 +203,9 @@ gatewayRoutesConfig:
               - Path=/**
 
 backofficeBffExtraConfig:
+  reactor:
+    netty:
+      native: false
   spring:
     data:
       redis:
@@ -332,6 +335,9 @@ backofficeBffExtraConfig:
               - Path=/**
 
 storefrontBffExtraConfig:
+  reactor:
+    netty:
+      native: false
   spring:
     data:
       redis:
