@@ -46,24 +46,24 @@ backend:
     - /opt/yas/extra-config/storefront-bff-extra-config.yaml
   hostAliases:
     - ip: "10.107.36.237"
-      hostnames: ["product"]
+      hostnames: ["product", "product.dev.svc.cluster.local"]
     - ip: "10.106.118.35"
-      hostnames: ["cart"]
+      hostnames: ["cart", "cart.dev.svc.cluster.local"]
     - ip: "10.100.179.89"
-      hostnames: ["customer"]
+      hostnames: ["customer", "customer.dev.svc.cluster.local"]
     - ip: "10.100.164.207"
-      hostnames: ["inventory"]
+      hostnames: ["inventory", "inventory.dev.svc.cluster.local"]
     - ip: "10.104.193.183"
-      hostnames: ["media"]
+      hostnames: ["media", "media.dev.svc.cluster.local"]
     - ip: "10.111.78.114"
-      hostnames: ["order"]
+      hostnames: ["order", "order.dev.svc.cluster.local"]
     - ip: "10.100.133.185"
-      hostnames: ["sampledata"]
+      hostnames: ["sampledata", "sampledata.dev.svc.cluster.local"]
     - ip: "10.98.186.243"
-      hostnames: ["search"]
+      hostnames: ["search", "search.dev.svc.cluster.local"]
     - ip: "10.102.21.177"
-      hostnames: ["tax"]
+      hostnames: ["tax", "tax.dev.svc.cluster.local"]
     - ip: "10.100.204.189"
-      hostnames: ["keycloak-service", "identity.yas.local.com", "identity.dev.local.com"]
+      hostnames: ["keycloak-service", "keycloak-service.dev.svc.cluster.local", "identity.yas.local.com", "identity.dev.local.com"]
     - ip: "10.97.117.51"
-      hostnames: ["keycloak-operator"]
+      hostnames: ["keycloak-operator", "keycloak-operator.dev.svc.cluster.local"]
