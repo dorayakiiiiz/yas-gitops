@@ -1,4 +1,4 @@
-﻿backend:
+backend:
   image:
     repository: dorayakiiiiz/yas-product
     tag: latest
@@ -8,6 +8,9 @@
   databaseName: product
   ingress:
     enabled: false
+  extraEnvs:
+    - name: JAVA_TOOL_OPTIONS
+      value: "-Xms64m -Xmx384m -XX:MaxMetaspaceSize=256m"
   extraVolumes:
     - name: product-application-config
       configMap:
