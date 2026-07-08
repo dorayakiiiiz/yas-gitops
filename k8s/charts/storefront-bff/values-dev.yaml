@@ -22,6 +22,8 @@ backend:
       value: prod
     - name: UI_HOST
       value: http://storefront-ui.dev.svc.cluster.local:3000
+    - name: REACTOR_NETTY_NATIVE
+      value: "false"
     - name: JAVA_TOOL_OPTIONS
       value: "-Djava.net.preferIPv4Stack=true -Dreactor.netty.native.useJdkDnsResolver=true"
   extraEnvFroms:
