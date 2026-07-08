@@ -1,4 +1,6 @@
-﻿backend:
+backend:
+  podAnnotations:
+    proxy.istio.io/config: '{"proxyMetadata":{"ISTIO_META_DNS_CAPTURE":"false","ISTIO_META_DNS_AUTO_ALLOCATE":"false"}}'
   image:
     repository: dorayakiiiiz/yas-storefront-bff
     tag: latest
