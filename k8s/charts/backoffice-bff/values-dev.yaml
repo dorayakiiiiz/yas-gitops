@@ -20,7 +20,7 @@ backend:
     - name: UI_HOST
       value: http://backoffice-ui.dev.svc.cluster.local:3000
     - name: JAVA_TOOL_OPTIONS
-      value: "-Djava.net.preferIPv4Stack=true"
+      value: "-Djava.net.preferIPv4Stack=true -Dreactor.netty.native.useJdkDnsResolver=true"
   extraEnvFroms:
     - secretRef:
         name: yas-keycloak-credentials-secret
