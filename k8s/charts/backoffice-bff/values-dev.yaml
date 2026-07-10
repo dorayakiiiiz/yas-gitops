@@ -41,3 +41,8 @@ backend:
   extraApplicationConfigPaths:
     - /opt/yas/gateway-routes-config/gateway-routes-config.yaml
     - /opt/yas/extra-config/backoffice-bff-extra-config.yaml
+  # Fix Netty DNS NXDOMAIN: override packed chart defaults with explicit hostAliases
+  hostAliases:
+    - ip: "10.98.214.121"
+      hostnames:
+        - "identity.yas.local.com"

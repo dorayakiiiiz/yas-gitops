@@ -101,6 +101,9 @@ livenessProbe:
     path: /actuator/health/liveness
     port: metric
 
+serviceMonitor:
+  enabled: true
+
 readinessProbe:
   initialDelaySeconds: 300
   periodSeconds: 10
