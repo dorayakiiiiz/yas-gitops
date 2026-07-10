@@ -29,5 +29,5 @@ services:
   inventory: { tag: "4afe514" }
   tax: { tag: "4afe514" }
   media: { tag: "4afe514" }
-  search: { tag: "latest" }
+  search: { tag: "4afe514" }
   sampledata: { tag: "latest" }
