@@ -27,7 +27,7 @@ services:
   order: { tag: "4afe514" }
   customer: { tag: "4afe514" }
   inventory: { tag: "4afe514" }
-  tax: { tag: "cc628eb" }
+  tax: { tag: "4afe514" }
   media: { tag: "4afe514" }
   search: { tag: "latest" }
   sampledata: { tag: "latest" }
