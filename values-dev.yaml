@@ -24,7 +24,7 @@ services:
   swagger-ui: { tag: "latest" }
   product: { tag: "latest" }
   cart: { tag: "4afe514" }
-  order: { tag: "latest" }
+  order: { tag: "4afe514" }
   customer: { tag: "4afe514" }
   inventory: { tag: "4afe514" }
   tax: { tag: "cc628eb" }
