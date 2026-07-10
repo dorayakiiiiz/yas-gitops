@@ -18,7 +18,7 @@ coreServices:
 services:
   yas-configuration: { tag: "latest" }
   storefront-bff: { tag: "8a39fcd" }
-  storefront-ui: { tag: "6b1be46" }
+  storefront-ui: { tag: "1200cd4" }
   backoffice-bff: { tag: "8a39fcd" }
   backoffice-ui: { tag: "8a39fcd" }
   swagger-ui: { tag: "latest" }
