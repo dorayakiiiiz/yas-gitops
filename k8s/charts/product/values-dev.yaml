@@ -2,6 +2,7 @@ backend:
   image:
     repository: dorayakiiiiz/yas-product
     tag: latest
+    pullPolicy: Always
 
   nameOverride: product
   fullnameOverride: product
