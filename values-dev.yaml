@@ -17,7 +17,7 @@ coreServices:
 
 services:
   yas-configuration: { tag: "latest" }
-  storefront-bff: { tag: "latest" }
+  storefront-bff: { tag: "4afe514" }
   storefront-ui: { tag: "latest" }
   backoffice-bff: { tag: "4afe514" }
   backoffice-ui: { tag: "latest" }
