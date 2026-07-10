@@ -23,7 +23,7 @@ services:
   backoffice-ui: { tag: "latest" }
   swagger-ui: { tag: "latest" }
   product: { tag: "latest" }
-  cart: { tag: "latest" }
+  cart: { tag: "4afe514" }
   order: { tag: "latest" }
   customer: { tag: "ceb77b6" }
   inventory: { tag: "latest" }
