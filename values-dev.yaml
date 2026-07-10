@@ -20,7 +20,7 @@ services:
   storefront-bff: { tag: "8a39fcd" }
   storefront-ui: { tag: "6b1be46" }
   backoffice-bff: { tag: "8a39fcd" }
-  backoffice-ui: { tag: "latest" }
+  backoffice-ui: { tag: "8a39fcd" }
   swagger-ui: { tag: "latest" }
   product: { tag: "latest" }
   cart: { tag: "8a39fcd" }
