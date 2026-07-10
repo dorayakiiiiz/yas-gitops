@@ -6,6 +6,9 @@ backend:
   nameOverride: product
   fullnameOverride: product
   databaseName: product
+
+  httpPort: 8080
+
   ingress:
     enabled: false
   extraEnvs:
@@ -19,5 +22,7 @@ backend:
     - name: product-application-config
       mountPath: /opt/yas/product
   extraApplicationConfigPaths:
-    - /opt/yas/product/product-application.yaml  
+    - /opt/yas/product/product-application.yaml
+  serviceMonitor:
+    enabled: true
 

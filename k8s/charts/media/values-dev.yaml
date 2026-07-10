@@ -1,4 +1,4 @@
-﻿backend:
+backend:
   image:
     repository: dorayakiiiiz/yas-media
     tag: latest

@@ -323,3 +323,32 @@ reloader:
   fullnameOverride: "yas-reloader"
   reloader:
     watchGlobally: false
+
+# Product application config custom
+productApplicationConfig:
+  server:
+    port: 8080
+  spring:
+    application:
+      name: product
+    datasource:
+      url: jdbc:postgresql://postgresql.postgres:5432/product
+      username: yasadminuser
+      password: admin
+    jpa:
+      hibernate:
+        ddl-auto: none
+  management:
+    server:
+      port: 8090
+    endpoints:
+      web:
+        exposure:
+          include: "prometheus,health,info"
+    metrics:
+      export:
+        prometheus:
+          enabled: true
+  yas:
+    services:
+      media: http://media.dev.svc.cluster.local/media
