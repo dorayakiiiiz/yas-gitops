@@ -1,7 +1,7 @@
 # values-staging.yaml
 envTag: "staging"
 repoURL: "https://github.com/dorayakiiiiz/yas-gitops.git"
-targetRevision: main # Nhánh chứa source code và Helm charts
+targetRevision: staging # Phải là staging để các app con cũng đồng bộ từ nhánh staging
 project: default
 
 coreServices:
