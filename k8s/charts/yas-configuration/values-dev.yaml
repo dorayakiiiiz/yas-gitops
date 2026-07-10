@@ -59,7 +59,7 @@ applicationConfig:
       oauth2:
         resourceserver:
           jwt:
-            jwk-set-uri: http://keycloak-service.dev.svc.cluster.local/realms/Yas/protocol/openid-connect/certs
+            jwk-set-uri: http://keycloak-service.yas.svc.cluster.local/realms/Yas/protocol/openid-connect/certs
 
     datasource:
       url:
@@ -98,11 +98,9 @@ gatewayRoutesConfig:
   spring:
     cloud:
       gateway:
-        server:
-          webflux:
-            default-filters:
-              - SaveSession
-            routes:
+        default-filters:
+          - SaveSession
+        routes:
               - id: product_api
                 uri: http://product
                 predicates:
@@ -219,9 +217,9 @@ backofficeBffExtraConfig:
           provider:
             keycloak:
               authorization-uri: http://identity.yas.local.com/realms/Yas/protocol/openid-connect/auth
-              token-uri: http://keycloak-service.dev.svc.cluster.local/realms/Yas/protocol/openid-connect/token
-              jwk-set-uri: http://keycloak-service.dev.svc.cluster.local/realms/Yas/protocol/openid-connect/certs
-              user-info-uri: http://keycloak-service.dev.svc.cluster.local/realms/Yas/protocol/openid-connect/userinfo
+              token-uri: http://keycloak-service.yas.svc.cluster.local/realms/Yas/protocol/openid-connect/token
+              jwk-set-uri: http://keycloak-service.yas.svc.cluster.local/realms/Yas/protocol/openid-connect/certs
+              user-info-uri: http://keycloak-service.yas.svc.cluster.local/realms/Yas/protocol/openid-connect/userinfo
               user-name-attribute: preferred_username
           registration:
             api-client:
@@ -243,9 +241,9 @@ storefrontBffExtraConfig:
           provider:
             keycloak:
               authorization-uri: http://identity.yas.local.com/realms/Yas/protocol/openid-connect/auth
-              token-uri: http://keycloak-service.dev.svc.cluster.local/realms/Yas/protocol/openid-connect/token
-              jwk-set-uri: http://keycloak-service.dev.svc.cluster.local/realms/Yas/protocol/openid-connect/certs
-              user-info-uri: http://keycloak-service.dev.svc.cluster.local/realms/Yas/protocol/openid-connect/userinfo
+              token-uri: http://keycloak-service.yas.svc.cluster.local/realms/Yas/protocol/openid-connect/token
+              jwk-set-uri: http://keycloak-service.yas.svc.cluster.local/realms/Yas/protocol/openid-connect/certs
+              user-info-uri: http://keycloak-service.yas.svc.cluster.local/realms/Yas/protocol/openid-connect/userinfo
               user-name-attribute: preferred_username
           registration:
             api-client:
@@ -265,7 +263,7 @@ mediaApplicationConfig:
 # Customer application config custom
 customerApplicationConfig:
   keycloak:
-    auth-server-url: http://keycloak-service.dev.svc.cluster.local
+    auth-server-url: http://keycloak-service.yas.svc.cluster.local
     realm: Yas
     resource: customer-management
     credentials:

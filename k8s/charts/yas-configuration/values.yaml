@@ -98,11 +98,9 @@ gatewayRoutesConfig:
   spring:
     cloud:
       gateway:
-        server:
-          webflux:
-            default-filters:
-              - SaveSession
-            routes:
+        default-filters:
+          - SaveSession
+        routes:
               - id: product_api
                 uri: http://product
                 predicates:

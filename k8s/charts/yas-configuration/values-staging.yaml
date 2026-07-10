@@ -351,9 +351,7 @@ storefrontBffExtraConfig:
     # External config file c priority cao hn JAR, nn route ny s thng.
     cloud:
       gateway:
-        server:
-          webflux:
-            routes:
+        routes:
               - id: product_api
                 uri: http://product
                 predicates:
