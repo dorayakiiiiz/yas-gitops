@@ -37,15 +37,30 @@ applicationConfig:
     metrics:
       tags:
         application: ${spring.application.name}
+      enable:
+        jvm: true
+        jvm.memory: true
+        jvm.gc: true
+        jvm.threads: true
+        jvm.classes: true
+        process: true
+        system: true
+      distribution:
+        percentiles-histogram:
+          http.server.requests: true
     endpoints:
       web:
         exposure:
-          include: prometheus, health
+          include: prometheus, health, metrics
     endpoint:
       health:
         probes:
           enabled: true
         show-details: always
+      prometheus:
+        enabled: true
+      metrics:
+        enabled: true
 
   logging:
     pattern:
