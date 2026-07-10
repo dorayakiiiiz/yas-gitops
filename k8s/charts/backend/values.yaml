@@ -93,7 +93,7 @@ lifecycle:
 terminationGracePeriodSeconds: 45
 
 livenessProbe:
-  initialDelaySeconds: 300
+  initialDelaySeconds: 120
   periodSeconds: 10
   failureThreshold: 120
   successThreshold: 1
@@ -102,7 +102,7 @@ livenessProbe:
     port: metric
 
 readinessProbe:
-  initialDelaySeconds: 180
+  initialDelaySeconds: 120
   periodSeconds: 10
   failureThreshold: 120
   successThreshold: 1
