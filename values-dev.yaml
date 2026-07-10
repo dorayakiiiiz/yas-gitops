@@ -28,6 +28,6 @@ services:
   customer: { tag: "ceb77b6" }
   inventory: { tag: "4afe514" }
   tax: { tag: "cc628eb" }
-  media: { tag: "latest" }
+  media: { tag: "4afe514" }
   search: { tag: "latest" }
   sampledata: { tag: "latest" }
