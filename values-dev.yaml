@@ -25,7 +25,7 @@ services:
   product: { tag: "latest" }
   cart: { tag: "8a39fcd" }
   order: { tag: "8a39fcd" }
-  customer: { tag: "latest" }
+  customer: { tag: "a9c3fef" }
   inventory: { tag: "8a39fcd" }
   tax: { tag: "8a39fcd" }
   media: { tag: "8a39fcd" }
