@@ -17,17 +17,17 @@ coreServices:
 
 services:
   yas-configuration: { tag: "latest" }
-  storefront-bff: { tag: "latest" }
-  storefront-ui: { tag: "6b1be46" }
-  backoffice-bff: { tag: "latest" }
-  backoffice-ui: { tag: "latest" }
+  storefront-bff: { tag: "8a39fcd" }
+  storefront-ui: { tag: "46507e9" }
+  backoffice-bff: { tag: "8a39fcd" }
+  backoffice-ui: { tag: "8a39fcd" }
   swagger-ui: { tag: "latest" }
   product: { tag: "latest" }
-  cart: { tag: "latest" }
-  order: { tag: "latest" }
+  cart: { tag: "8a39fcd" }
+  order: { tag: "8a39fcd" }
   customer: { tag: "latest" }
-  inventory: { tag: "latest" }
-  tax: { tag: "latest" }
-  media: { tag: "latest" }
-  search: { tag: "latest" }
+  inventory: { tag: "8a39fcd" }
+  tax: { tag: "8a39fcd" }
+  media: { tag: "8a39fcd" }
+  search: { tag: "8a39fcd" }
   sampledata: { tag: "latest" }
